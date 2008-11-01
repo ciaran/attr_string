@@ -1,0 +1,39 @@
+# attr_string
+
+attr_string is a C++ wrapper around `NSAttributedString` designed to make constructing attributed strings easier (and less verbose).
+
+## Usage
+
+attr_string lets you build up an attributed string by adding attributes and content. Attributes you add will apply to all the content after them (until they are removed).
+
+For example, you can easily create a bold label followed by normal text:
+
+	attr_string_t msg();
+	msg.add(style::bold);
+	msg.add("Label: ");
+	msg.add(style::unbold);
+	msg.add("Normal Text");
+
+Or inline:
+
+	[field setAttributedStringValue:(attr_string_t(style::bold) << "Label: " << style::unbold << "Normal Text")];
+
+An equivalent using `NSAttributedString`:
+
+	NSFont* boldFont                   = [NSFont boldSystemFontOfSize:12];
+	NSDictionary* boldFontAttributes   = [NSDictionary dictionaryWithObject:boldFont forKey:NSFontAttributeName];
+	NSMutableAttributedString* attrMsg = [[[NSMutableAttributedString alloc] initWithString:@"Label: " attributes:boldFontAttributes] autorelease];
+	[attrMsg appendAttributedString:[[[NSMutableAttributedString alloc] initWithString:@"Normal Text " attributes:nil] autorelease]];
+
+You can use an `attr_string_t` wherever you’d pass an `NSAttributedString`, though you may need to explicitly cast it in some cases (notably when calling an `NSAttributedString` method, for example `[(NSAttributedString*)msg drawInRect:rect]`).
+
+## Styles
+
+See the `style::type` enum for available styles, currently there are styles for bold, underline, italic and embossed text. As well as the style::type constants, you can also pass an `NSFont`, `NSColor` (use `style::background([NSColor redColor])` to set a background colour), `NSShadow`, and even an `NSImage`, and they’ll do the right thing. Passing an `NSString` or a char* will append the text with the currently set styles.
+
+
+## Caveats
+
+Literal `NSString`s (e.g. `@"Foo bar"`) are actually not typed as instances of `NSString` at compile-time, which means that you cannot pass them directly to `attr_string_t` without casting as `(NSString*)`. You can use a C-string literal instead though, and any methods which return an `NSString*` will be usable without casting.
+
+Unfortunately `+[NSImage imageNamed:]` returns an `id` rather than an `NSImage*`, which means that it must be casted to be passed directly to `attr_string_t`.

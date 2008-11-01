@@ -1,0 +1,6 @@
+build
+demo/demo.xcodeproj/*.pbxuser
+demo/demo.xcodeproj/*.perspectivev3
+demo/demo.xcodeproj/*.mode1v3
+demo/demo.xcodeproj/*.tm_build_errors
+*.tmproj
