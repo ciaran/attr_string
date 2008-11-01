@@ -1,10 +1,12 @@
 # attr_string
 
-attr_string is a C++ wrapper around `NSAttributedString` designed to make constructing attributed strings easier (and less verbose).
+attr\_string is a C++ wrapper around `NSAttributedString` designed to make constructing attributed strings easier (and less verbose).
 
 ## Usage
 
-attr_string lets you build up an attributed string by adding attributes and content. Attributes you add will apply to all the content after them (until they are removed).
+To start using attr\_string, just copy [attr\_string.h](http://github.com/ciaran/attr_string/tree/master/attr_string.h) into your project and `#import` it. You may want to add `using namespace attr_string;` on a line after the `#import` to reduce typing (**all the examples here and in the demo assume this**).
+
+attr\_string lets you build up an attributed string by adding attributes and content. Attributes you add will apply to all the content after them (until they are removed).
 
 For example, you can easily create a bold label followed by normal text:
 
@@ -29,7 +31,7 @@ You can use an `attr_string_t` wherever you’d pass an `NSAttributedString`, th
 
 ## Styles
 
-See the `style::type` enum for available styles, currently there are styles for bold, underline, italic and embossed text. As well as the style::type constants, you can also pass an `NSFont`, `NSColor` (use `style::background([NSColor redColor])` to set a background colour), `NSShadow`, and even an `NSImage`, and they’ll do the right thing. Passing an `NSString` or a char* will append the text with the currently set styles.
+See the `style::type` enum for available styles, currently there are styles for bold, underline, italic and embossed text. As well as the `style::type` constants, you can also pass an `NSFont`, `NSColor` (use `style::background([NSColor redColor])` to set a background colour), `NSShadow`, and even an `NSImage`, and they’ll do the right thing. Passing an `NSString` or a char* will append the text with the currently set styles.
 
 
 ## Caveats

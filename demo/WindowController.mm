@@ -1,5 +1,6 @@
 #import "WindowController.h"
 #import "../attr_string.h"
+using namespace attr_string;
 
 @implementation WindowController
 - (void)awakeFromNib
