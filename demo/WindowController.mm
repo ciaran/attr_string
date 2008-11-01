@@ -19,6 +19,9 @@
 	[icon setSize:NSMakeSize(16, 16)];
 	[self addLabel:(attr_string_t() << "File icon " << icon << " for " << [filePath lastPathComponent])];
 
+	// Using the global << shortcut
+	[self addLabel:(style::underline << "Foo" << style::nounderline << "Bar")];
+
 	// A more complex example
 	attr_string_t msg;
 	msg.add(style::emboss);

@@ -146,3 +146,5 @@ public:
 		return result;
 	}
 };
+
+template<typename T> attr_string_t operator<<(style::type left, T right) { return attr_string_t(left) << right; }
