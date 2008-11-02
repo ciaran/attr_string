@@ -1,3 +1,7 @@
+// A C++ wrapper around NSAttributedString
+// Ciarán Walsh, 2008
+// Visit http://github.com/ciaran/attr_string/tree/master for the latest version
+
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 #import <string>
