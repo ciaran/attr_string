@@ -22,13 +22,13 @@ namespace attr_string
 
 		// Styles that simply set a font trait can be defined here
 		struct {
-			attr_string::style::type style;
+			type style;
 			int font_trait;
 		} static font_traits[] = {
-			{attr_string::style::bold,     NSBoldFontMask     },
-			{attr_string::style::unbold,   NSUnboldFontMask   },
-			{attr_string::style::italic,   NSItalicFontMask   },
-			{attr_string::style::unitalic, NSUnitalicFontMask },
+			{bold,     NSBoldFontMask    },
+			{unbold,   NSUnboldFontMask  },
+			{italic,   NSItalicFontMask  },
+			{unitalic, NSUnitalicFontMask},
 		};
 	}
 
@@ -54,8 +54,8 @@ namespace attr_string
 
 		attr_string_t& add (char const* text)        { _string.append(text); return *this;                                }
 		attr_string_t& add (NSString* text)          { return add([text UTF8String]);                                     }
-		attr_string_t& add (attr_string::style::type value)       { return set_attribute(nil, [NSNumber numberWithInt:value]);         }
-		attr_string_t& add (attr_string::style::background value) { return set_attribute(NSBackgroundColorAttributeName, value.color); }
+		attr_string_t& add (style::type value)       { return set_attribute(nil, [NSNumber numberWithInt:value]);         }
+		attr_string_t& add (style::background value) { return set_attribute(NSBackgroundColorAttributeName, value.color); }
 		attr_string_t& add (NSImage* image)
 		{
 			if(image)
@@ -94,16 +94,16 @@ namespace attr_string
 
 				if(!it->attr)
 				{
-					attr_string::style::type style     = (attr_string::style::type)[value intValue];
+					style::type style     = (style::type)[value intValue];
 					bool did_handle_style = false;
 
 					// Handle font trait styles
-					for(int i = 0; i < sizeof(attr_string::style::font_traits) / sizeof(attr_string::style::font_traits[0]); ++i)
+					for(int i = 0; i < sizeof(style::font_traits) / sizeof(style::font_traits[0]); ++i)
 					{
-						if(style == attr_string::style::font_traits[i].style)
+						if(style == style::font_traits[i].style)
 						{
 							attr             = NSFontAttributeName;
-							value            = [[NSFontManager sharedFontManager] convertFont:[attributes objectForKey:NSFontAttributeName] toHaveTrait:(attr_string::style::font_traits[i].font_trait)];
+							value            = [[NSFontManager sharedFontManager] convertFont:[attributes objectForKey:NSFontAttributeName] toHaveTrait:(style::font_traits[i].font_trait)];
 							did_handle_style = true;
 						}
 					}
@@ -113,22 +113,22 @@ namespace attr_string
 						// Handle custom styles
 						switch(style)
 						{
-							case attr_string::style::underline:
+							case style::underline:
 								attr  = NSUnderlineStyleAttributeName;
 								value = [NSNumber numberWithInt:NSUnderlineStyleSingle];
 								break;
-							case attr_string::style::nounderline:
+							case style::nounderline:
 								attr  = NSUnderlineStyleAttributeName;
 								value = nil;
 								break;
-							case attr_string::style::emboss:
+							case style::emboss:
 								attr  = NSShadowAttributeName;
 								value = [[NSShadow new] autorelease];
 								[value setShadowColor:[NSColor colorWithDeviceWhite:1 alpha:0.7]];
 								[value setShadowOffset:NSMakeSize(0,-1)];
 								[value setShadowBlurRadius:1];
 								break;
-							case attr_string::style::noemboss:
+							case style::noemboss:
 								attr  = NSShadowAttributeName;
 								value = nil;
 								break;
@@ -150,5 +150,5 @@ namespace attr_string
 		}
 	};
 
-	template<typename T> attr_string_t operator<<(attr_string::style::type left, T right) { return attr_string_t(left) << right; }
+	template<typename T> attr_string_t operator<<(style::type left, T right) { return attr_string_t(left) << right; }
 }
