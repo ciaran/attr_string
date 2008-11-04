@@ -111,7 +111,7 @@ namespace attr_string
 
 		operator NSAttributedString* () const
 		{
-			std::stack<NSDictionary*> _attribute_stack;
+			std::stack<NSDictionary*> attribute_stack;
 			NSMutableDictionary* attributes   = [[NSMutableDictionary new] autorelease];
 			NSMutableAttributedString* result = [[NSMutableAttributedString new] autorelease];
 			size_t last_pos = 0;
@@ -167,15 +167,15 @@ namespace attr_string
 								value = nil;
 								break;
 							case style::push:
-								_attribute_stack.push([[attributes copy] autorelease]);
+								attribute_stack.push([[attributes copy] autorelease]);
 								[attributes removeAllObjects];
 								value = attr = nil;
 								break;
 							case style::pop:
-								assert(!_attribute_stack.empty());
+								assert(!attribute_stack.empty());
 								[attributes removeAllObjects];
-								[attributes addEntriesFromDictionary:_attribute_stack.top()];
-								_attribute_stack.pop();
+								[attributes addEntriesFromDictionary:attribute_stack.top()];
+								attribute_stack.pop();
 								value = attr = nil;
 								break;
 						}
