@@ -6,6 +6,7 @@
 #import <AppKit/AppKit.h>
 #import <string>
 #import <vector>
+#import <stack>
 
 namespace attr_string
 {
@@ -17,6 +18,8 @@ namespace attr_string
 			italic,    unitalic,
 			underline, nounderline,
 			emboss,    noemboss,
+
+			push,      pop,
 		};
 		struct background
 		{
@@ -92,6 +95,7 @@ namespace attr_string
 
 		operator NSAttributedString* () const
 		{
+			std::stack<NSDictionary*> _attribute_stack;
 			NSMutableDictionary* attributes   = [[NSMutableDictionary new] autorelease];
 			NSMutableAttributedString* result = [[NSMutableAttributedString new] autorelease];
 			size_t last_pos = 0;
@@ -146,13 +150,25 @@ namespace attr_string
 								attr  = NSShadowAttributeName;
 								value = nil;
 								break;
+							case style::push:
+								_attribute_stack.push([[attributes copy] autorelease]);
+								[attributes removeAllObjects];
+								value = attr = nil;
+								break;
+							case style::pop:
+								assert(!_attribute_stack.empty());
+								[attributes removeAllObjects];
+								[attributes addEntriesFromDictionary:_attribute_stack.top()];
+								_attribute_stack.pop();
+								value = attr = nil;
+								break;
 						}
 					}
 				}
 
 				if(value)
 					[attributes setObject:value forKey:attr];
-				else
+				else if(attr)
 					[attributes removeObjectForKey:attr];
 			}
 
