@@ -74,6 +74,16 @@ namespace attr_string
 			}
 			return *this;
 		}
+		attr_string_t& add (NSURL* link)
+		{
+			if(link)
+			{
+				set_attribute(NSLinkAttributeName, [link absoluteString]);
+				add([NSColor blueColor]);
+				add(style::underline);
+			}
+			return *this;
+		}
 
 		inline NSString* attribute_for (NSFont*)          { return NSFontAttributeName;                    }
 		inline NSString* attribute_for (NSColor*)         { return NSForegroundColorAttributeName;         }
