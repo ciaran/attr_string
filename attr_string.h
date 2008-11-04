@@ -59,10 +59,11 @@ namespace attr_string
 
 		template <typename T> attr_string_t operator<< (T value) const { return attr_string_t(*this).add(value); }
 
-		attr_string_t& add (char const* text)        { _string.append(text); return *this;                                }
-		attr_string_t& add (NSString* text)          { return add([text UTF8String]);                                     }
-		attr_string_t& add (style::type value)       { return set_attribute(nil, [NSNumber numberWithInt:value]);         }
-		attr_string_t& add (style::background value) { return set_attribute(NSBackgroundColorAttributeName, value.color); }
+		attr_string_t& add (const std::string& string) { _string.append(string); return *this;                              }
+		attr_string_t& add (char const* text)          { _string.append(text); return *this;                                }
+		attr_string_t& add (NSString* text)            { return add([text UTF8String]);                                     }
+		attr_string_t& add (style::type value)         { return set_attribute(nil, [NSNumber numberWithInt:value]);         }
+		attr_string_t& add (style::background value)   { return set_attribute(NSBackgroundColorAttributeName, value.color); }
 		attr_string_t& add (NSImage* image)
 		{
 			if(image)
