@@ -3,5 +3,5 @@
 @interface WindowController : NSWindowController
 {
 }
-- (void)addLabel:(NSAttributedString*)title;
+- (NSTextField*)addLabel:(NSAttributedString*)title;
 @end
