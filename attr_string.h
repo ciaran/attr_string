@@ -88,6 +88,21 @@ namespace attr_string
 			}
 			return *this;
 		}
+		attr_string_t& add (const attr_string_t& attr_string)
+		{
+			add(style::push);
+			for(std::vector<attr_t>::const_iterator it = attr_string._attributes.begin(); it != attr_string._attributes.end(); ++it)
+			{
+				attr_t attr;
+				attr.attr  = it->attr;
+				attr.value = it->value;
+				attr.pos   = it->pos + _string.length();
+				_attributes.push_back(attr);
+			}
+			add(attr_string._string);
+			add(style::pop);
+			return *this;
+		}
 
 		inline NSString* attribute_for (NSFont*)          { return NSFontAttributeName;                    }
 		inline NSString* attribute_for (NSColor*)         { return NSForegroundColorAttributeName;         }
