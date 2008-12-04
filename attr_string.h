@@ -104,10 +104,12 @@ namespace attr_string
 			return *this;
 		}
 
-		inline NSString* attribute_for (NSFont*)          { return NSFontAttributeName;                    }
-		inline NSString* attribute_for (NSColor*)         { return NSForegroundColorAttributeName;         }
-		inline NSString* attribute_for (NSShadow*)        { return NSShadowAttributeName;                  }
-		template <typename T> attr_string_t& add (T arg)  { return set_attribute(attribute_for(arg), arg); }
+		inline NSString* attribute_for (NSFont*)                  { return NSFontAttributeName;                    }
+		inline NSString* attribute_for (NSColor*)                 { return NSForegroundColorAttributeName;         }
+		inline NSString* attribute_for (NSShadow*)                { return NSShadowAttributeName;                  }
+		inline NSString* attribute_for (NSParagraphStyle*)        { return NSParagraphStyleAttributeName;          }
+		inline NSString* attribute_for (NSMutableParagraphStyle*) { return NSParagraphStyleAttributeName;          }
+		template <typename T> attr_string_t& add (T arg)          { return set_attribute(attribute_for(arg), arg); }
 
 		operator NSAttributedString* () const
 		{
