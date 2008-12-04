@@ -31,9 +31,7 @@ using namespace attr_string;
 	// Using the global << shortcut
 	[self addLabel:(style::underline << "Foo" << style::nounderline << "Bar")];
 
-	NSMutableParagraphStyle* paragraph = [[NSMutableParagraphStyle new] autorelease];
-	[paragraph setLineBreakMode:NSLineBreakByTruncatingTail];
-	[self addLabel:(attr_string_t(paragraph) << [@"" stringByPaddingToLength:102 withString:@"foo" startingAtIndex:0])];
+	[self addLabel:(attr_string_t(style::line_break(NSLineBreakByTruncatingTail)) << std::string(70, 'X'))];
 
 	// A more complex example
 	attr_string_t msg;

@@ -26,6 +26,11 @@ namespace attr_string
 			background(NSColor* color) : color(color) {}
 			NSColor* color;
 		};
+		struct line_break
+		{
+			line_break(NSUInteger mode) : mode(mode) {}
+			NSUInteger mode;
+		};
 
 		// Styles that simply set a font trait can be defined here
 		struct {
@@ -64,6 +69,14 @@ namespace attr_string
 		attr_string_t& add (NSString* text)            { return add([text UTF8String]);                                     }
 		attr_string_t& add (style::type value)         { return set_attribute(nil, [NSNumber numberWithInt:value]);         }
 		attr_string_t& add (style::background value)   { return set_attribute(NSBackgroundColorAttributeName, value.color); }
+		attr_string_t& add (style::line_break value)
+		{
+			// FIXME here we create a new paragraph style, but there may be one already in effect
+			// we should instead copy and mutate the current style if there is one
+			NSMutableParagraphStyle* paragraph = [[NSMutableParagraphStyle new] autorelease];
+			[paragraph setLineBreakMode:value.mode];
+			return add(paragraph);
+		}
 		attr_string_t& add (NSImage* image)
 		{
 			if(image)
