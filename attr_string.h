@@ -124,7 +124,7 @@ namespace attr_string
 		inline NSString* attribute_for (NSMutableParagraphStyle*) { return NSParagraphStyleAttributeName;          }
 		template <typename T> attr_string_t& add (T arg)          { return set_attribute(attribute_for(arg), arg); }
 
-		operator NSAttributedString* () const
+		NSAttributedString* get () const
 		{
 			std::stack<NSDictionary*> attribute_stack;
 			NSMutableDictionary* attributes   = [[NSMutableDictionary new] autorelease];
@@ -209,6 +209,7 @@ namespace attr_string
 
 			return result;
 		}
+		operator NSAttributedString* () const { return get(); }
 
 		operator bool () const { return !is_empty(); };
 		bool is_empty () const { return _string.size() == 0; };
