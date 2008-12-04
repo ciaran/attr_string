@@ -58,6 +58,7 @@ using namespace attr_string;
 	[label setDrawsBackground:NO];
 	[label setStringValue:@"foo"];
 	[label setAttributedStringValue:title];
+	[label setAutoresizingMask:NSViewWidthSizable];
 	[self.window.contentView addSubview:label];
 
 	return label;
