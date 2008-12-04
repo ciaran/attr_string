@@ -209,6 +209,9 @@ namespace attr_string
 
 			return result;
 		}
+
+		operator bool () const { return !is_empty(); };
+		bool is_empty () const { return _string.size() == 0; };
 	};
 
 	template<typename T> attr_string_t operator<<(style::type left, T right) { return attr_string_t(left) << right; }
