@@ -10,7 +10,7 @@ attr\_string lets you build up an attributed string by adding attributes and con
 
 For example, you can easily create a bold label followed by normal text:
 
-	attr_string_t msg();
+	attr_string_t msg;
 	msg.add(style::bold);
 	msg.add("Label: ");
 	msg.add(style::unbold);
